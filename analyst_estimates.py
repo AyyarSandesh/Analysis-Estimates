@@ -186,10 +186,13 @@ try:
                     # Convert the selected rows into a list of lists
                     rows_array2 = rows_5_to_10.values.tolist()
                     print("Old row values 2 ",rows_array2)
+                else:
+                    rows_array2=[]
+                    new_row_values2=[]
 
 
                 # Compare the rows
-                if rows_array == new_row_values or rows_array2 == new_row_values2:
+                if rows_array == new_row_values and rows_array2 == new_row_values2:
                     print("No changes in the first row. Skipping save.")
                     # app.quit()
                     return
@@ -326,7 +329,7 @@ try:
 
     # Usage example
     send_email_with_attachments(
-        subject=f"Analyst Estimates report:",
+        subject=f"Updated Analyst Estimates report {date.today()}",
         body="Please find the attached Analyst estimates report.",
         folder_path="E:/PYTHON/STOCK_MARKET/ANALYST_ESTIMATES/"f"{date.today()}",
         email_user=email_user,
@@ -334,7 +337,7 @@ try:
         recipient_email=recipient_email
     )
     send_email_with_attachments(
-        subject=f"Excel Report:",
+        subject=f"Updated Analyst Estimates report {date.today()}",
         body="Please find the attached Analyst estimates report.",
         folder_path="E:/PYTHON/STOCK_MARKET/ANALYST_ESTIMATES/"f"{date.today()}",
         email_user=email_user,
@@ -342,7 +345,7 @@ try:
         recipient_email="SM.Isengard@protonmail.com"
     )
     send_email_with_attachments(
-        subject=f"Excel Report:",
+        subject=f"Updated Analyst Estimates report {date.today()}:",
         body="Please find the attached Analyst estimates report.",
         folder_path="E:/PYTHON/STOCK_MARKET/ANALYST_ESTIMATES/"f"{date.today()}",
         email_user=email_user,
