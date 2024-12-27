@@ -16,6 +16,7 @@ import time
 from dotenv import load_dotenv
 import os
 from datetime import datetime, date,timedelta
+import glob
 # Simulate today's date for testing
 today = datetime.now()
 
@@ -86,7 +87,7 @@ try:
     Log_in(username,password)
     time.sleep(20)
 
-    def Get_excel(Newlink):
+    def Get_excel(Id,Newlink):
         try:
             driver.get(Newlink)
             window_size()
@@ -140,7 +141,7 @@ try:
             save_dir = "E:/PYTHON/STOCK_MARKET/ANALYST_ESTIMATES/" f"{date.today()}"
             os.makedirs(save_dir, exist_ok=True)
                 # Save as .xlsx using pandas
-            excel_file_path_xlsx = os.path.join(save_dir, f"{Company_name.text}.xlsx")
+            excel_file_path_xlsx = os.path.join(save_dir, f"{Id+Company_name.text}.xlsx")
             with pd.ExcelWriter(excel_file_path_xlsx, engine='openpyxl') as writer:
                 df1.to_excel(writer, sheet_name='Annually', index=False)
                 if is_present:
@@ -155,9 +156,13 @@ try:
             today=date.today()
             
             # previous_file_path = f"E:/PYTHON/STOCK_MARKET/ANALYST_ESTIMATES/{today - timedelta(days=15)}/{Company_name.text}.xlsx"  # Update this path as needed
-            previous_file_path = f"E:/PYTHON/STOCK_MARKET/ANALYST_ESTIMATES/{previous_date_str}/{Company_name.text}.xlsx"  # Update this path as needed
-            
-            print(previous_file_path)
+            previous_file_path_search = f"E:/PYTHON/STOCK_MARKET/ANALYST_ESTIMATES/{previous_date_str}/*{Id}*.xlsx"  # Update this path as needed
+            previous_files = glob.glob(previous_file_path_search)
+            if previous_files:
+                previous_file_path = previous_files[0]  # Take the first matching file
+                print(previous_file_path)
+            else:
+                previous_file_path=f"E:/PYTHON/STOCK_MARKET/ANALYST_ESTIMATES/{previous_date_str}/{Company_name.text}.xlsx"
             
             # Fetch and compare the first row
             new_row_values = df1.iloc[:4, :-1].values.tolist() if not df1.empty else []
@@ -274,20 +279,20 @@ try:
 
 
 
-    Get_excel("https://app.tikr.com/stock/estimates?cid=231651802&tid=704119980&tab=est&ref=g4lonq")#applovin #1
-    Get_excel("https://app.tikr.com/stock/estimates?cid=276763615&tid=1673049332&tab=est&ref=g4lonq") #robinhood #2
-    Get_excel("https://app.tikr.com/stock/estimates?cid=315460452&tid=541712010&ref=g4lonq&tab=est")#Hellofresh #3
-    Get_excel("https://app.tikr.com/stock/estimates?cid=246247134&tid=704022864&ref=g4lonq&tab=est")#Oscar Health #4
-    Get_excel("https://app.tikr.com/stock/estimates?cid=533311640&tid=1675971465&ref=g4lonq&tab=est")#Hippo Holdings #5
-    Get_excel("https://app.tikr.com/stock/estimates?cid=679030261&tid=697654886&ref=g4lonq&tab=est")#Rush Steet Interactive #6
-    Get_excel("https://app.tikr.com/stock/estimates?cid=638035157&tid=691055363&ref=g4lonq&tab=est")#Root #7
-    Get_excel("https://app.tikr.com/stock/estimates?cid=105810806&tid=707739955&ref=g4lonq&tab=est")#Vimeo #8
-    Get_excel("https://app.tikr.com/stock/estimates?cid=1679658907&tid=1680507426&ref=g4lonq&tab=est")#Olaplex #9
-    Get_excel("https://app.tikr.com/stock/estimates?cid=572584066&tid=573484889&ref=g4lonq&tab=est")#Opera Ltd #10
-    Get_excel("https://app.tikr.com/stock/estimates?cid=280965739&tid=1864865348&ref=g4lonq&tab=est")#R & S Group Holdings # 11
-    Get_excel("https://app.tikr.com/stock/estimates?cid=332752&tid=1790506691&ref=g4lonq&tab=est")#Adtran # 12
-    Get_excel("https://app.tikr.com/stock/estimates?cid=145722736&tid=717072548&ref=g4lonq&tab=est")#Bark # 13
-    Get_excel("https://app.tikr.com/stock/estimates?cid=3044099&tid=207420139&ref=g4lonq&tab=est")#Aspen Aerogels # 14
+    Get_excel("AE001","https://app.tikr.com/stock/estimates?cid=231651802&tid=704119980&tab=est&ref=g4lonq")#applovin #1
+    Get_excel("AE002","https://app.tikr.com/stock/estimates?cid=276763615&tid=1673049332&tab=est&ref=g4lonq") #robinhood #2
+    Get_excel("AE003","https://app.tikr.com/stock/estimates?cid=315460452&tid=541712010&ref=g4lonq&tab=est")#Hellofresh #3
+    Get_excel("AE004","https://app.tikr.com/stock/estimates?cid=246247134&tid=704022864&ref=g4lonq&tab=est")#Oscar Health #4
+    Get_excel("AE005","https://app.tikr.com/stock/estimates?cid=533311640&tid=1675971465&ref=g4lonq&tab=est")#Hippo Holdings #5
+    Get_excel("AE006","https://app.tikr.com/stock/estimates?cid=679030261&tid=697654886&ref=g4lonq&tab=est")#Rush Steet Interactive #6
+    Get_excel("AE007","https://app.tikr.com/stock/estimates?cid=638035157&tid=691055363&ref=g4lonq&tab=est")#Root #7
+    Get_excel("AE008","https://app.tikr.com/stock/estimates?cid=105810806&tid=707739955&ref=g4lonq&tab=est")#Vimeo #8
+    Get_excel("AE009","https://app.tikr.com/stock/estimates?cid=1679658907&tid=1680507426&ref=g4lonq&tab=est")#Olaplex #9
+    Get_excel("AE010","https://app.tikr.com/stock/estimates?cid=572584066&tid=573484889&ref=g4lonq&tab=est")#Opera Ltd #10
+    Get_excel("AE011","https://app.tikr.com/stock/estimates?cid=280965739&tid=1864865348&ref=g4lonq&tab=est")#R & S Group Holdings # 11
+    Get_excel("AE012","https://app.tikr.com/stock/estimates?cid=332752&tid=1790506691&ref=g4lonq&tab=est")#Adtran # 12
+    Get_excel("AE013","https://app.tikr.com/stock/estimates?cid=145722736&tid=717072548&ref=g4lonq&tab=est")#Bark # 13
+    Get_excel("AE014","https://app.tikr.com/stock/estimates?cid=3044099&tid=207420139&ref=g4lonq&tab=est")#Aspen Aerogels # 14
     # 
 
 
